@@ -7,5 +7,11 @@
 </head>
 <body>
     <h2>Home page</h2>
+    <ul class="list">
+        <li class="list-item"><a href="{{  route('about.us') }}">About page</a></li>
+        <li class="list-item"><a href="{{  route('contact.us') }}">Contact page</a></li>
+        <li class="list-item"><a href="{{  route('section.us') }}">Section page</a></li>
+      
+    </ul>
 </body>
 </html>
