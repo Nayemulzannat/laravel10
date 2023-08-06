@@ -11,15 +11,17 @@ Route::get('/', function () {                                                   
 
 
 
- Route::get('/welcome', function () {                                           //wellcome page route
-    return view('welcome');
+//  Route::get('/welcome', function () {                                           //wellcome page route
+//     return view('welcome');
 
+// });
+
+Route::controller(testController::class)->group(function(){
+    Route::get('/about/{id?}','about')->name('about.us');          //contact page route
+    Route::get('/contact/nayem','contact')->name('contact.us');                //contact page route
+    Route::get('/section/nayem','section')->name('section.us');                    //section page route
 });
 
 
 
-
-Route::get('/about/{id}',[testController::class,'about'])->name('about.us');          //contact page route
-Route::get('/contact/nayem',[testController::class,'contact'])->name('contact.us');                //contact page route
-Route::get('/section/nayem',[testController::class,'section'])->name('section.us');                    //section page route
 

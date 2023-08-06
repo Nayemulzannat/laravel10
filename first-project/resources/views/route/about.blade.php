@@ -4,3 +4,5 @@
 <h2>About Page {{ $id }}</h2>
 
 <a href="{{  URL:: to('/') }}"> Beck to Home</a>
+
+<a href="{{ route('section.us') }}"> Beck to section</a>
