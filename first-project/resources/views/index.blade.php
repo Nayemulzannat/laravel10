@@ -15,17 +15,25 @@
     </ul>
 
 
-    {!!"<h1>This is Home page.</h1>"!!}
+    {!!"<h1>This loop and condition page.</h1>"!!}
 
 @php
     $name =["Nayem","Nayemul islam","Asadul islam","Habib","Shamim","Helal"]
 @endphp
 <ul>
 @foreach ($name as $item)
-    <li>{{$item}}</li>
+    @if ($loop->even)
+        <li style="color: red";> {{$item}} </li>
+    @elseif($loop->odd)
+    <li style="color: blue";> {{$item}} </li>
+    @else
+    <li> {{$ittem}} </li>
+    @endif
 @endforeach
 </ul>
 
+@include('route.section')
+    
 
 
 </body>
