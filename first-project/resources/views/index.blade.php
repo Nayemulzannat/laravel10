@@ -32,7 +32,7 @@
 @endforeach
 </ul>
 
-@include('route.section')
+{{-- @include('route.section') --}}
     
 
 
