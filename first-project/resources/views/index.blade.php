@@ -6,13 +6,8 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h1 style="text-align: center">Home page</h1>
-    <ul class="list">
-        <li class="list-item"><a href="{{  route('about.us') }}">About page</a></li>
-        <li class="list-item"><a href="{{  route('contact.us') }}">Contact page</a></li>
-        <li class="list-item"><a href="{{  route('section.us') }}">Section page</a></li>
-      
-    </ul>
+    @extends('layouts.master')
+
 
 
     {!!"<h1>This loop and condition page.</h1>"!!}

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\testController;
+use App\Http\Controllers\UserControler;
 
 
 
@@ -22,6 +23,8 @@ Route::controller(testController::class)->group(function(){
     Route::get('/section/nayem','section')->name('section.us');                    //section page route
 });
 
+Route::get('/user/', [UserControler::class, 'showUsers'])->name('showuser.us');
+Route::get('/singleUser/{id}', [UserControler::class, 'singleUser'])->name('singleUser.us');
 
 
 
