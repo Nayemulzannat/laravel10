@@ -14,6 +14,7 @@
             <li class="list-item"><a href="{{  route('contact.us') }}">Contact page</a></li>
             <li class="list-item"><a href="{{  route('section.us') }}">Section page</a></li>
             <li class="list-item"><a href="{{  route('showuser.us') }}">ShowUser page</a></li>
+            {{-- <li class="list-item"><a href="{{  route('adduser.us') }}">AddUser page</a></li> --}}
         </ul>
     </nav>
     <article>
@@ -26,6 +27,9 @@
     <div>
         @yield('showuser')
 
+    </div>
+    <div>
+        @yield('addUser')
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-6">
                 <h1>All User List</h1>
+                <a href="adduser" class="btn btn-success btn-lg mb-3">Add user</a>
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>ID</th>
@@ -14,7 +15,8 @@
                         <th>City</th>
                         <th>created_at</th>
                         <th>updated_at</th>
-                        <th>VieW</th>
+                        <th>View</th>
+                        <th>Delete</th>
                     </tr>
                     @foreach ($data as $id => $user)
                     <tr>
@@ -26,6 +28,7 @@
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td><a href="{{ route('singleUser.us',$user->id) }}" class="btn btn-primary btn-lg">View</a></td>
+                        <td><a href="{{ route('deleteUser.us',$user->id) }}" class="btn btn-danger btn-lg">Delete</a></td>
                   
                     </tr>
                     @endforeach

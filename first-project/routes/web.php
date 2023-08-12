@@ -17,14 +17,16 @@ Route::get('/', function () {                                                   
 
 // });
 
-Route::controller(testController::class)->group(function(){
-    Route::get('/about/{id?}','about')->name('about.us');          //contact page route
-    Route::get('/contact/nayem','contact')->name('contact.us');                //contact page route
-    Route::get('/section/nayem','section')->name('section.us');                    //section page route
+Route::controller(testController::class)->group(function () {
+    Route::get('/about/{id?}', 'about')->name('about.us');          //contact page route
+    Route::get('/contact/nayem', 'contact')->name('contact.us');                //contact page route
+    Route::get('/section/nayem', 'section')->name('section.us');                    //section page route
 });
 
 Route::get('/user/', [UserControler::class, 'showUsers'])->name('showuser.us');
 Route::get('/singleUser/{id}', [UserControler::class, 'singleUser'])->name('singleUser.us');
-
+Route::get('/deletUser/{id}', [UserControler::class, 'deletUser'])->name('deleteUser.us');
+// Route::get('/adduser/{id}', [UserControler::class, 'adduser'])->name('adduser.us');
+Route::view('adduser','/adduser');
 
 

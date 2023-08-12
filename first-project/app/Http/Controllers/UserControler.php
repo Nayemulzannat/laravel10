@@ -7,13 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class UserControler extends Controller
 {
-    public function showUsers(){
-        $users= DB::table('users')->get();
+    public function showUsers()
+    {
+        $users = DB::table('users')->get();
         // return $users;
-        return view('route.showuser',[ 'data' => $users]); 
+        return view('route.showuser', ['data' => $users]);
     }
-    public function singleUser(string $id){
-        $users = DB::table('users')->where('id',$id)->get();
-        return view('route.singleUser',[ 'data' => $users]); 
+    public function singleUser(string $id)
+    {
+        $users = DB::table('users')->where('id', $id)->get();
+        return view('route.singleUser', ['data' => $users]);
+    }
+    public function deletUser(string $id)
+    {
+        $users = DB::table('users')
+            ->where('id', $id)
+            ->delete();
+        if ($users) {
+            return redirect()->route('showuser.us');
+        }
     }
 }
