@@ -23,11 +23,16 @@ Route::controller(testController::class)->group(function () {
     Route::get('/section/nayem', 'section')->name('section.us');                    //section page route
 });
 
-    Route::get('/user', [UserControler::class, 'showUsers'])->name('showuser.us');
-    Route::get('/singleUser/{id}', [UserControler::class, 'singleUser'])->name('singleUser.us');
-    Route::get('/deletUser/{id}', [UserControler::class, 'deletUser'])->name('deleteUser.us');
-    Route::post('/adduser', [UserControler::class, 'addUser'])->name('addUser.us');
-    Route::post('/updateUser/{id}', [UserControler::class, 'updateUser'])->name('updateUser.us');
+Route::controller(UserControler::class)->group(function () {
+    Route::get('/user','showUsers')->name('showuser.us');
+    Route::get('/singleUser/{id}','singleUser')->name('singleUser.us');
+    Route::get('/deletUser/{id}','deletUser')->name('deleteUser.us');
+    Route::post('/adduser','addUser')->name('addUser.us');
+    // Route::post('/updateUser/{id}', [UserControler::class, 'updateUser'])->name('updateUser.us');
+    Route::post('/update/{id}','updateUser')->name('update.user');
+    Route::get('updatePage/{id}', 'updatePage')->name('updatePage');
+});
 
-    Route::view('newuser', '/route.addUser');
-    Route::view('updateuser', '/route.update');
+
+
+Route::view('newuser', '/route.addUser');

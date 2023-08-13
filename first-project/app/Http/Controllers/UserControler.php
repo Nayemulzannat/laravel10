@@ -43,16 +43,25 @@ class UserControler extends Controller
             return redirect()->route('showuser.us');
         }
     }
+
+    public function updatePage(string $id)
+    {
+        $users = DB::table('users')->find($id);
+
+        return view('route.update', ['data' => $users]);
+    }
+
+
     public function updateUser(Request $update, $id)
     {
         $users = DB::table('users')
-        ->where('id', $id)
-        ->update([
-            'name' => $update->username,
-            'phone' => $update->userphone,
-            'email' => $update->useremail,
-            'city' => $update->usercity,
-        ]);
+            ->where('id', $id)
+            ->update([
+                'name' => $update->username,
+                'phone' => $update->userphone,
+                'email' => $update->useremail,
+                'city' => $update->usercity,
+            ]);
         if ($users) {
             return redirect()->route('showuser.us');
         }

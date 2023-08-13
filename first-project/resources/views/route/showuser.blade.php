@@ -1,4 +1,3 @@
-<a href="{{ url('/') }}">Beck to Home</a>
 @extends('layouts.master')
 @section('showuser')
     <div class="container">
@@ -20,22 +19,25 @@
                         <th>Update</th>
                     </tr>
                     @foreach ($data as $id => $user)
-                    <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->city }}</td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
-                        <td><a href="{{ route('singleUser.us',$user->id) }}" class="btn btn-primary btn-lg">View</a></td>
-                        <td><a href="{{ route('deleteUser.us',$user->id) }}" class="btn btn-danger btn-lg">Delete</a></td>
-                        {{-- <td><a href="{{ route('deleteUser.us',$user->id) }}" class="btn btn-warning btn-lg">Update</a></td> --}}
-                        <td><a href="updateuser" class="btn btn-warning btn-lg">Update</a></td>
-                  
-                    </tr>
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->city }}</td>
+                            <td>{{ $user->created_at }}</td>
+                            <td>{{ $user->updated_at }}</td>
+                            <td><a href="{{ route('singleUser.us', $user->id) }}" class="btn btn-primary btn-lg">View</a></td>
+                            <td><a href="{{ route('deleteUser.us', $user->id) }}" class="btn btn-danger btn-lg">Delete</a></td>
+                            <td><a href="{{ route('updatePage', $user->id) }}" class="btn btn-warning btn-lg">Update</a></td>
+                            {{-- <td><a href="updatePage" class="btn btn-warning btn-lg">Update</a></td> --}}
+
+                        </tr>
                     @endforeach
                 </table>
+                {{-- <button style="test-color:rgb(255, 0, 0);" class="btn btn-primary"><a href="{{ url('/') }}">Beck to Home</a></button> --}}
+                <a href="{{ url('/') }}">Beck to Home</a>
+
             </div>
         </div>
     </div>
