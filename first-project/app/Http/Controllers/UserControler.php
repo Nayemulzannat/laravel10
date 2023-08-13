@@ -13,16 +13,46 @@ class UserControler extends Controller
         // return $users;
         return view('route.showuser', ['data' => $users]);
     }
+
     public function singleUser(string $id)
     {
         $users = DB::table('users')->where('id', $id)->get();
+
         return view('route.singleUser', ['data' => $users]);
     }
+
     public function deletUser(string $id)
     {
         $users = DB::table('users')
             ->where('id', $id)
             ->delete();
+        if ($users) {
+            return redirect()->route('showuser.us');
+        }
+    }
+    public function addUser(Request $add)
+    {
+        $users = DB::table('users')->insert([
+            'name' => $add->username,
+            'phone' => $add->userphone,
+            'email' => $add->useremail,
+            'city' => $add->usercity,
+
+        ]);
+        if ($users) {
+            return redirect()->route('showuser.us');
+        }
+    }
+    public function updateUser(Request $update, $id)
+    {
+        $users = DB::table('users')
+        ->where('id', $id)
+        ->update([
+            'name' => $update->username,
+            'phone' => $update->userphone,
+            'email' => $update->useremail,
+            'city' => $update->usercity,
+        ]);
         if ($users) {
             return redirect()->route('showuser.us');
         }
