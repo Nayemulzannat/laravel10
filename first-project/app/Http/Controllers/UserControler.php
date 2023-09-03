@@ -13,14 +13,11 @@ class UserControler extends Controller
         // return $users;
         return view('route.showuser', ['data' => $users]);
     }
-
     public function singleUser(string $id)
     {
         $users = DB::table('users')->where('id', $id)->get();
-
         return view('route.singleUser', ['data' => $users]);
     }
-
     public function deletUser(string $id)
     {
         $users = DB::table('users')
@@ -50,8 +47,6 @@ class UserControler extends Controller
 
         return view('route.update', ['data' => $users]);
     }
-
-
     public function updateUser(Request $update, $id)
     {
         $users = DB::table('users')
