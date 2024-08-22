@@ -21,9 +21,22 @@ class JWTToken
         return $jwt = JWT::encode($payload, $key, 'HS256');
     }
 
+    public static function createTokenPasswordSet($userEmail): string
+    {
+        $key = env(key: 'JWT_token');
+
+        $payload = [
+            'iss' => 'laravel-token',
+            'iat' => time(),
+            'exp' => time() * 60 * 5,
+            'userEmail' => $userEmail
+        ];
+        return $jwt = JWT::encode($payload, $key, 'HS256');
+    }
 
 
-    public static function veryfyToken($jwtToken)
+
+    public static function veryfyToken($jwtToken):string|object
     {
 
         try {
