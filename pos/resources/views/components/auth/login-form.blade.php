@@ -27,26 +27,42 @@
 
 <script>
     async function SubmitLogin() {
-        let email = $('#email').val();
-        let password = $('#password').val();
+        let emailField = document.getElementById('email');
+        let passwordField = document.getElementById('password');
 
-        if (email.length == 0) {
-            errorToast('Email is required');
+        // Get values
+        let email = emailField.value.trim();
+        let password = passwordField.value.trim();
+
+        // Reset previous errors
+        emailField.classList.remove('is-invalid');
+        passwordField.classList.remove('is-invalid');
+
+        if (email.length == 0 && password.length == 0) {
+            // errorToast('Email is required');
+            emailField.classList.add('is-invalid');
+            passwordField.classList.add('is-invalid');
+        } else if (email.length == 0) {
+            emailField.classList.add('is-invalid');
         } else if (password.length == 0) {
-            errorToast('Email is required');
+            // errorToast('Password is required');
+            passwordField.classList.add('is-invalid');
 
         } else if (password.length < 4) {
-            errorToast('Email is Must Be Four Charecther');
+            errorToast('Password is Must Be Four Charecther');
+            passwordField.classList.add('is-invalid');
         } else {
-            // showLoader();
-            let res = await axios.post("/userLogin", {
+            showLoader();
+            let res = await axios.post("/user-login", {
                 email: email,
                 password: password
-            })
-            // hideLoader();
+            });
+            hideLoader()
+            if (res.status === 200 && res.data['status'] === 'success') {
+                window.location.href = "/dashboard";
+            } else {
+                errorToast(res.data['message']);
+            }
         }
-
-
-
     }
 </script>

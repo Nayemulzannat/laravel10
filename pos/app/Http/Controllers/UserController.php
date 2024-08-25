@@ -55,7 +55,7 @@ class UserController extends Controller
             ]);
 
             return response()->json([
-                'staus' => 'Success',
+                'status' => 'success',
                 'message' => 'User Registration Successfully'
             ], 200);
         } catch (Exception $e) {
@@ -86,8 +86,8 @@ class UserController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
-                'token' => $token
-            ], 200);
+
+            ], 200)->cookie('token', $token, 60);
         } else {
             return response()->json([
                 'status' => 'Faild',
@@ -138,9 +138,8 @@ class UserController extends Controller
             $token = JWTToken::createTokenPasswordSet($email);
             return response()->json([
                 'status' => 'success',
-                'message' => 'OTP Verification Successful',
-                'token' => $token
-            ], 200);
+                'message' => 'OTP Verification Successful'
+            ], 200)->cookie('token', $token, time() + 60 * 24 * 30);
         } else {
             return response()->json([
                 'status' => 'Faild',
