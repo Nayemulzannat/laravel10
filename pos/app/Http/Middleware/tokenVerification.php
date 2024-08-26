@@ -16,25 +16,16 @@ class tokenVerification
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->header(key:'token');
+
+        $token = $request->cookie('token');
         $result = JWTToken::veryfyToken($token);
 
-        // Log the result for debugging
-        // return $result;
-
-        if (is_string($result) && $result === 'Unauthorized') {
-            return response()->json([
-                'status' => 'Failed',
-                'message' => 'Token verification unauthorized'
-            ], 401);
-        } elseif (is_object($result) && property_exists($result, 'userEmail')) {
-            $request->headers->set('email', $result->userEmail);
-            return $next($request);
+        if ($result == 'Unauthorized') {
+            return redirect(to: '/userLogin');
         } else {
-            return response()->json([
-                'status' => 'Failed',
-                'message' => 'Invalid token format'
-            ], 400);
+            $request->headers->set('userEmail', $result->userEmail);
+            $request->headers->set('userID', $result->userID);
+            return $next($request);
         }
     }
 }

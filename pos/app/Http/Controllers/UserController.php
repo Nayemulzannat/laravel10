@@ -79,14 +79,15 @@ class UserController extends Controller
         $count = User::where([
             ['email', '=', $email],
             ['password', '=', $password],
-        ])->count();
+        ])->select('id')->first();
 
-        if ($count) {
-            $token = JWTToken::createToken($email);
+        $userID = $count->id;
+
+        if ($count !== NULL) {
+            $token = JWTToken::createToken($email, $userID);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
-
             ], 200)->cookie('token', $token, 60);
         } else {
             return response()->json([
@@ -114,7 +115,7 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 'send',
-                'message' => '4 Digit OTP Code has been send to your email !'
+                'message' => 'OTP Code has been send to your email !'
             ], 200);
         } else {
             return response()->json([
@@ -138,8 +139,9 @@ class UserController extends Controller
             $token = JWTToken::createTokenPasswordSet($email);
             return response()->json([
                 'status' => 'success',
-                'message' => 'OTP Verification Successful'
-            ], 200)->cookie('token', $token, time() + 60 * 24 * 30);
+                'message' => 'OTP Verification Successful',
+            ], 200)
+                ->cookie('token', $token, time() + 60 * 24 * 30);
         } else {
             return response()->json([
                 'status' => 'Faild',
@@ -151,8 +153,8 @@ class UserController extends Controller
     {
 
         try {
-            $email = $request->header(key: 'email');
-            $pass = $request->input(key: 'password');
+            $email = $request->header('userEmail');
+            $pass = $request->input('password');
 
             User::where('email', $email)->update(['password' => $pass]);
 
@@ -166,5 +168,11 @@ class UserController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
         }
+    }
+
+    function UserLogout(Request $request)
+    {
+
+        return redirect(to: '/userLogin')->cookie('token', '', -1);
     }
 }
