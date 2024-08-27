@@ -23,6 +23,8 @@ Route::post('/user-login', [UserController::class, 'UserlogIn']);
 Route::post('/user-sendotp', [UserController::class, 'SendOTPCode']);
 Route::post('/user-verifyotp', [UserController::class, 'VerifyOTP']);
 Route::post('/user-resetpassword', [UserController::class, 'ResetPassword'])->middleware([tokenVerification::class]);
+Route::get('/user-profile', [UserController::class, 'userProfle'])->middleware([tokenVerification::class]);
+Route::post('/user-update-profile', [UserController::class, 'userProfileUpdate'])->middleware([tokenVerification::class]);
 
 
 

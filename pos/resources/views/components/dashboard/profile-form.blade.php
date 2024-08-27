@@ -26,8 +26,7 @@
                             </div>
                             <div class="col-md-4 p-2">
                                 <label>Password</label>
-                                <input id="password" placeholder="User Password" class="form-control"
-                                    type="password" />
+                                <input id="password" placeholder="User Password" class="form-control" type="text" />
                             </div>
                         </div>
                         <div class="row m-0 p-0">
@@ -42,6 +41,74 @@
     </div>
 </div>
 <script>
+    async function getProfie() {
+        showLoader();
+        let res = await axios.get("/user-profile")
+        hideLoader();
 
-    
+        if (res.status == 200 && res.data['status'] == 'success') {
+            var userData = res.data['data'];
+            $('#email').val(userData['email']);
+            $('#firstName').val(userData['firstName']);
+            $('#lastName').val(userData['lastName']);
+            $('#mobile').val(userData['mobile']);
+            $('#password').val(userData['password']);
+
+        } else {
+            errorToast(res.data['message'])
+        }
+
+    }
+    getProfie();
+
+    async function onUpdate() {
+
+        let firstName = $('#firstName').val();
+        let lastName = $('#lastName').val();
+        let mobile = $('#mobile').val();
+        let password = $('#password').val();
+
+
+
+        if (firstName.length == 0 && lastName.length == 0 && mobile.length == 0 && password
+            .length == 0) {
+
+            $('#email,#password, #firstName, #lastName, #mobile').addClass('is-invalid');
+
+        } else if (firstName.length == 0 && lastName.length == 0 && mobile.length == 0 && password
+            .length == 0) {
+
+            $('#password, #firstName, #lastName, #mobile').addClass('is-invalid');
+
+        } else if (lastName.length == 0 && mobile.length == 0 && password.length == 0) {
+            $('#password, #lastName, #mobile').addClass('is-invalid');
+
+        } else if (mobile.length == 0 && password.length == 0) {
+            $('#password, #mobile').addClass('is-invalid');
+
+        } else if (password.length == 0) {
+            $('#password').addClass('is-invalid');
+
+        } else if (password.length < 4) {
+            errorToast('Password is Must Be Four Charecther');
+            $('#password').addClass('is-invalid');
+        } else {
+            showLoader();
+            let res = await axios.post("/user-update-profile", {
+                firstName: firstName,
+                lastName: lastName,
+                mobile: mobile,
+                password: password
+            });
+
+            hideLoader();
+            if (res.status === 200 && res.data['status'] === 'success') {
+                successToast(res.data['message']);
+                await getProfile();
+            } else {
+                errorToast(res.data['message']);
+            }
+
+        }
+    }
 </script>
