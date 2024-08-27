@@ -193,12 +193,17 @@ class UserController extends Controller
 
     function userProfileUpdate(Request $request)
     {
+        $email = $request->header('userEmail');
+        $firstName =  $request->input('firstName');
+        $lastName =  $request->input('lastName');
+        $mobile =  $request->input('mobile');
+        $password =  $request->input('password');
         try {
-            User::create([
-                'firstName' => $request->input('firstName'),
-                'lastName' => $request->input('lastName'),
-                'mobile' => $request->input('mobile'),
-                'password' => $request->input('password'),
+            User::where('email', $email)->update([
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'mobile' => $mobile,
+                'password' => $password,
             ]);
 
             return response()->json([
