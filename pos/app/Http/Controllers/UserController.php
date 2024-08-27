@@ -175,4 +175,42 @@ class UserController extends Controller
 
         return redirect(to: '/userLogin')->cookie('token', '', -1);
     }
+
+
+    function userProfle(Request $request)
+    {
+        $email = $request->header('userEmail');
+
+        $user = User::where('email', $email)->first();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Request Successful',
+            'data' => $user
+        ], 200);
+    }
+
+
+    function userProfileUpdate(Request $request)
+    {
+        try {
+            User::create([
+                'firstName' => $request->input('firstName'),
+                'lastName' => $request->input('lastName'),
+                'mobile' => $request->input('mobile'),
+                'password' => $request->input('password'),
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User Update Successfully'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'Failed',
+                'message' => 'User Update Failed'
+                // 'message' => $e->getMessage()
+            ], 200);
+        }
+    }
 }
