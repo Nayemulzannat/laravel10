@@ -83,7 +83,7 @@ class UserController extends Controller
 
         $userID = $count->id;
 
-        if ($count !== NULL) {
+        if ($count != NULL) {
             $token = JWTToken::createToken($email, $userID);
             return response()->json([
                 'status' => 'success',
