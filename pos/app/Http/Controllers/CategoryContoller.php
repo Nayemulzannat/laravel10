@@ -10,5 +10,6 @@ class CategoryContoller extends Controller
     {
         return view('pages.dashboard.category-page');
         // return view('pages.dashboard.category-page');
+        // return view('pages.dashboard.category-page');
     }
 }
