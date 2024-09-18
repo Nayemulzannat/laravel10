@@ -9,7 +9,5 @@ class CategoryContoller extends Controller
     function CategoryPage()
     {
         return view('pages.dashboard.category-page');
-        // return view('pages.dashboard.category-page');
-        // return view('pages.dashboard.category-page');
     }
 }
