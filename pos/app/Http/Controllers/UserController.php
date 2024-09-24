@@ -75,6 +75,7 @@ class UserController extends Controller
         // return $count = User::where('email', $email)
         //     ->where('password', $password)
         //     ->count();
+        //     ->count();
 
         $count = User::where([
             ['email', '=', $email],
