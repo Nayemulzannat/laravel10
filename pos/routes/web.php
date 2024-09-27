@@ -42,5 +42,11 @@ Route::get('/dashboard', [DashboardController::class, 'DashboardPage'])->middlew
 Route::get('/resetPassword', [UserController::class, 'ResetPasswordPage'])->middleware([tokenVerification::class]);
 Route::get('/userProfile', [UserController::class, 'ProfilePage'])->middleware([tokenVerification::class]);
 
+// API Rout Category LIst
+Route::post('/category-list', [CategoryContoller::class, 'categoryList'])->middleware([tokenVerification::class]);
+Route::post('/category-create', [CategoryContoller::class, 'categoryCreate'])->middleware([tokenVerification::class]);
+Route::post('/category-update', [CategoryContoller::class, 'updateCategory'])->middleware([tokenVerification::class]);
+Route::post('/category-delete', [CategoryContoller::class, 'deleteCategory'])->middleware([tokenVerification::class]);
 
-Route::get('/categoryPage',[CategoryContoller::class,'CategoryPage'])->middleware([tokenVerification::class]);
+// Page Routes Category
+Route::get('/categoryPage', [CategoryContoller::class, 'CategoryPage'])->middleware([tokenVerification::class]);
