@@ -18,10 +18,38 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="Update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
+                <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal"
+                    aria-label="Close">Close</button>
+                <button onclick="categoryUpdate()" id="update-btn" class="btn bg-gradient-success">Update</button>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    async function categoryUpdate() {
+        let updateID = $('#updateID').val();
+        let categoryNameUpdate = $('#categoryNameUpdate').val();
+        if (categoryNameUpdate.length == 0) {
+            errorToast("Category Required !")
+        } else {
+            showLoader();
+            let res = await axios.post("/category-update", {
+                id: updateID,
+                name: categoryNameUpdate,
+            })
+            hideLoader();
+
+            if (res.status == 200 && res.data['status'] == 'success') {
+                $("#update-modal").modal('hide');
+                // $('#categoryNameUpdate').val('');
+                successToast(res.data['message']);
+
+                await getCategoryData();
+            } else {
+                errorToast(res.data['message'])
+            }
+        }
+
+    }
+</script>

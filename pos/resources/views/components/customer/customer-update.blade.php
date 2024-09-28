@@ -9,14 +9,17 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-                                <label class="form-label">Customer Name *</label>
-                                <input type="text" class="form-control" id="customerNameUpdate">
+                                <label class="form-label">Customer Name <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" id="customerNameUpdate"
+                                    onclick="removeClass()">
 
-                                <label class="form-label mt-3">Customer Email *</label>
-                                <input type="text" class="form-control" id="customerEmailUpdate">
+                                <label class="form-label mt-3">Customer Email <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" id="customerEmailUpdate"
+                                    onclick="removeClass()">
 
-                                <label class="form-label mt-3">Customer Mobile *</label>
-                                <input type="text" class="form-control" id="customerMobileUpdate">
+                                <label class="form-label mt-3">Customer Mobile <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" id="customerMobileUpdate"
+                                    onclick="removeClass()">
 
                                 <input type="text" class="d-none" id="updateID">
                             </div>
@@ -25,8 +28,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="Update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
+                <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal"
+                    aria-label="Close">Close</button>
+                <button onclick="customerUpdate()" id="update-btn" class="btn bg-gradient-success">Update</button>
             </div>
         </div>
     </div>
@@ -34,59 +38,62 @@
 
 
 <script>
+    async function customerUpdate() {
 
 
+        let updateID = $('#updateID').val();
+        let customerNameUpdate = $('#customerNameUpdate').val();
+        let customerEmailUpdate = $('#customerEmailUpdate').val();
+        let customerMobileUpdate = $('#customerMobileUpdate').val();
 
-    async function FillUpUpdateForm(id){
-        document.getElementById('updateID').value=id;
-        showLoader();
-        let res=await axios.post("/customer-by-id",{id:id})
-        hideLoader();
-        document.getElementById('customerNameUpdate').value=res.data['name'];
-        document.getElementById('customerEmailUpdate').value=res.data['email'];
-        document.getElementById('customerMobileUpdate').value=res.data['mobile'];
-    }
+        if (customerNameUpdate.length == 0 && customerEmailUpdate.length == 0 && customerMobileUpdate.length == 0) {
+            $('#customerNameUpdate,#customerEmailUpdate, #customerMobileUpdate').addClass('is-invalid');
 
+        } else if (customerEmailUpdate.length == 0 && customerMobileUpdate.length == 0) {
+            $('#customerEmailUpdate, #customerMobileUpdate').addClass('is-invalid');
 
-    async function Update() {
+        } else if (customerNameUpdate.length == 0 && customerMobileUpdate.length == 0) {
+            $('#customerNameUpdate, #customerMobileUpdate').addClass('is-invalid');
 
-        let customerName = document.getElementById('customerNameUpdate').value;
-        let customerEmail = document.getElementById('customerEmailUpdate').value;
-        let customerMobile = document.getElementById('customerMobileUpdate').value;
-        let updateID = document.getElementById('updateID').value;
+        } else if (customerNameUpdate.length == 0 && customerEmailUpdate.length == 0) {
+            $('#customerNameUpdate, #customerEmailUpdate').addClass('is-invalid');
 
+        } else if (customerNameUpdate.length == 0) {
+            $('#customerNameUpdate').addClass('is-invalid');
 
-        if (customerName.length === 0) {
-            errorToast("Customer Name Required !")
-        }
-        else if(customerEmail.length===0){
-            errorToast("Customer Email Required !")
-        }
-        else if(customerMobile.length===0){
-            errorToast("Customer Mobile Required !")
-        }
-        else {
+        } else if (customerEmailUpdate.length == 0) {
+            $('#customerEmailUpdate').addClass('is-invalid');
 
-            document.getElementById('update-modal-close').click();
+        } else if (customerMobileUpdate.length == 0) {
+            $('#customerMobileUpdate').addClass('is-invalid');
 
+        } else {
             showLoader();
-
-            let res = await axios.post("/update-customer",{name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
-
+            let res = await axios.post("/customer-update", {
+                id: updateID,
+                name: customerNameUpdate,
+                email: customerEmailUpdate,
+                mobile: customerMobileUpdate
+            })
             hideLoader();
 
-            if(res.status===200 && res.data===1){
+            if (res.status == 200 && res.data['status'] == 'success') {
+                $("#update-modal").modal('hide');
+                $('#update-form')[0].reset();
+                successToast(res.data['message']);
 
-                successToast('Request completed');
-
-                document.getElementById("update-form").reset();
-
-                await getList();
-            }
-            else{
-                errorToast("Request fail !")
+                await getCustomerData();
+            } else {
+                errorToast(res.data['message'])
             }
         }
+
     }
 
+
+    function removeClass() {
+        $('#customerName').removeClass('is-invalid');
+        $('#customerEmail').removeClass('is-invalid');
+        $('#customerMobile').removeClass('is-invalid');
+    }
 </script>

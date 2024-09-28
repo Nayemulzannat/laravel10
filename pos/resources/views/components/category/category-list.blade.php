@@ -30,3 +30,53 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        getCategoryData();
+    });
+
+
+    async function getCategoryData() {
+        showLoader();
+        let res = await axios.post("/category-list");
+        hideLoader();
+
+        let tableData = $('#tableData');
+        let tableList = $('#tableList');
+
+
+        tableData.DataTable().destroy();
+        tableList.empty();
+
+
+        res.data.forEach(function(item, index) {
+            let row = `<tr>
+                  <td>${index+1}</td>
+                    <td>${item['name']}</td>
+                    <td>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['name']}')">Edit</button>
+                        <button class="btn deleteBtn btn-sm btn-outline-danger" onclick="deleteModal(${item['id']})">Delete</button>
+                    </td>
+                </tr>`;
+
+            tableList.append(row);
+        })
+
+        new DataTable('#tableData')
+
+    }
+
+    function deleteModal(id) {
+        $("#delete-modal").modal('show');
+        $("#deleteID").val(id);
+
+    }
+
+    function editModal(id, name) {
+        $("#update-modal").modal('show');
+        $("#updateID").val(id);
+        $("#categoryNameUpdate").val(name);
+    }
+</script>
