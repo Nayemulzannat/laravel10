@@ -15,6 +15,7 @@
                 <table class="table" id="tableData">
                     <thead>
                         <tr class="bg-light">
+                            <th>No</th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Price</th>
@@ -33,10 +34,14 @@
 
 
 <script>
+    $(document).ready(function() {
+        getProductData();
+    });
     async function getProductData() {
         showLoader();
         let res = await axios.post("/product-list");
         hideLoader();
+
 
         let tableData = $('#tableData');
         let tableList = $('#tableList');
@@ -48,15 +53,25 @@
         res.data.forEach(function(item, index) {
             let row = `<tr>
                   <td>${index+1}</td>
+                   <td><img class="w-15 h-auto" alt="" src="${item['img_url']}"></td>
                     <td>${item['name']}</td>
-                    <td>${item['mobile']}</td>
-                    <td>${item['email']}</td>
+                    <td>${item['price']}</td>
+                    <td>${item['unit']}</td>
                     <td>
-                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['name']}','${item['email']}','${item['mobile']}')">Edit</button>
-                        <button class="btn deleteBtn btn-sm btn-outline-danger" onclick="deleteModal(${item['id']})">Delete</button>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['img_url']}')">Edit</button>
+                        <button class="btn deleteBtn btn-sm btn-outline-danger" onclick="deleteModal(${item['id']},'${item['img_url']}')">Delete</button>
                     </td>
                 </tr>`;
-
+            tableList.append(row)
         });
+        new DataTable('#tableData')
+    }
+
+
+    function deleteModal(id, img_url) {
+        $("#delete-modal").modal('show');
+
+        $("#deleteID").val(id);
+        $("#deleteFilePath").val(img_url);
     }
 </script>
