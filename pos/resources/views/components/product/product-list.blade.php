@@ -71,6 +71,7 @@
     function deleteModal(id, img_url) {
         $("#delete-modal").modal('show');
         // $("#delete-modal").modal('show');
+        // $("#delete-modal").modal('show');
 
         $("#deleteID").val(id);
         $("#deleteFilePath").val(img_url);
