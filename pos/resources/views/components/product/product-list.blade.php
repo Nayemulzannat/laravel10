@@ -31,7 +31,7 @@
         </div>
     </div>
 </div>
-
+<!-- <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['category_id']},'${item['name']},'${item['price']},'${item['unit']}','${item['img_url']})">Edit</button> -->
 
 <script>
     $(document).ready(function() {
@@ -58,7 +58,10 @@
                     <td>${item['price']}</td>
                     <td>${item['unit']}</td>
                     <td>
-                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['img_url']}')">Edit</button>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success" onclick="editModal(${item['id']},'${item['img_url']}','${item['category_id']}','${item['name']}','${item['price']}','${item['unit']}')">Edit</button>
+
+                    
+
                         <button class="btn deleteBtn btn-sm btn-outline-danger" onclick="deleteModal(${item['id']},'${item['img_url']}')">Delete</button>
                     </td>
                 </tr>`;
@@ -75,5 +78,19 @@
 
         $("#deleteID").val(id);
         $("#deleteFilePath").val(img_url);
+    }
+
+
+    function editModal(id, img_url, category_id, name, price, unit) {
+        $("#update-modal").modal('show');
+
+        $("#updateID").val(id);
+        $("#filePath").val(img_url);
+        $("#oldImg").attr("src", img_url);
+        $("#productCategoryUpdate").val(category_id);
+        $("#productNameUpdate").val(name);
+        $("#productPriceUpdate").val(price);
+        $("#productUnitUpdate").val(unit);
+
     }
 </script>

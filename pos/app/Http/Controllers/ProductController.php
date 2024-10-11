@@ -103,7 +103,7 @@ class ProductController extends Controller
             $img->move(public_path('uploads'), $img_name);
 
             // Delete Old File
-            $filePath = $request->input('img_url');
+            $filePath = $request->input('filePath');
             File::delete($filePath);
 
             $result = product::where('user_id', $user_id)->where('id', $category_id)->update([
