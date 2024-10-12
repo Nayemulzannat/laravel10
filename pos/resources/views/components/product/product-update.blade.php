@@ -71,63 +71,63 @@
 
 
 
-        if (productCategoryUpdate.length == 0 && productNameUpdate.length == 0 && productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
-            $('#productCategoryUpdate,#productNameUpdate, #productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
+        // if (productCategoryUpdate.length == 0 && productNameUpdate.length == 0 && productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
+        //     $('#productCategoryUpdate,#productNameUpdate, #productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
 
-        } else if (productNameUpdate.length == 0 && productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
-            $('#productNameUpdate, #productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
+        // } else if (productNameUpdate.length == 0 && productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
+        //     $('#productNameUpdate, #productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
 
-        } else if (productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
-            $('#productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
+        // } else if (productPriceUpdate.length == 0 && productUnitUpdate.length == 0 && !productImgUpdate) {
+        //     $('#productPriceUpdate, #productUnitUpdate, #productImgUpdate').addClass('is-invalid');
 
-        } else if (productUnitUpdate.length == 0 && !productImgUpdate) {
-            $('#productUnitUpdate, #productImgUpdate').addClass('is-invalid');
+        // } else if (productUnitUpdate.length == 0 && !productImgUpdate) {
+        //     $('#productUnitUpdate, #productImgUpdate').addClass('is-invalid');
 
-        } else if (!productImgUpdate) {
-            $('#productImgUpdate').addClass('is-invalid');
+        // } else if (!productImgUpdate) {
+        //     $('#productImgUpdate').addClass('is-invalid');
 
-        } else if (productUnitUpdate.length == 0) {
-            $('#productUnitUpdate').addClass('is-invalid');
+        // } else if (productUnitUpdate.length == 0) {
+        //     $('#productUnitUpdate').addClass('is-invalid');
 
-        } else if (productPriceUpdate.length == 0) {
-            $('#productPriceUpdate').addClass('is-invalid');
+        // } else if (productPriceUpdate.length == 0) {
+        //     $('#productPriceUpdate').addClass('is-invalid');
 
-        } else if (productNameUpdate.length == 0) {
-            $('#productNameUpdate').addClass('is-invalid');
+        // } else if (productNameUpdate.length == 0) {
+        //     $('#productNameUpdate').addClass('is-invalid');
 
-        } else if (productCategoryUpdate.length == 0) {
-            $('#productCategoryUpdate').addClass('is-invalid');
+        // } else if (productCategoryUpdate.length == 0) {
+        //     $('#productCategoryUpdate').addClass('is-invalid');
 
-        } else {
+        // } else {
 
-            let formData = new FormData();
-            formData.append('updateID', updateID);
-            formData.append('filePath', filePath);
-            formData.append('category_id', productCategoryUpdate);
-            formData.append('name', productNameUpdate);
-            formData.append('price', productPriceUpdate);
-            formData.append('unit', productUnitUpdate);
-            formData.append('img_url', productImgUpdate); // Append the image file
+        let formData = new FormData();
+        formData.append('updateID', updateID);
+        formData.append('filePath', filePath);
+        formData.append('category_id', productCategoryUpdate);
+        formData.append('name', productNameUpdate);
+        formData.append('price', productPriceUpdate);
+        formData.append('unit', productUnitUpdate);
+        formData.append('img_url', productImgUpdate); // Append the image file
 
-            const config = {
-                headers: {
-                    'content-type': 'multipart/from-data'
-                }
+        const config = {
+            headers: {
+                'content-type': 'multipart/from-data'
             }
-            showLoader();
-            let res = await axios.post("/product-update", formData, config)
-            hideLoader();
-
-            if (res.status == 200 && res.data['status'] == 'success') {
-                successToast(res.data['message']);
-                $('#save-form')[0].reset();
-                // $('#categoryName').val('');
-                await getProductData();
-            } else {
-                errorToast(res.data['message']);
-            }
-
         }
+        showLoader();
+        let res = await axios.post("/product-update", formData, config)
+        hideLoader();
+
+        if (res.status == 200 && res.data['status'] == 'success') {
+            successToast(res.data['message']);
+            // $('#update-modal')[0].reset();
+            // $('#categoryName').val('');
+            await getProductData();
+        } else {
+            errorToast(res.data['message']);
+        }
+
+        // }
 
     }
 </script>

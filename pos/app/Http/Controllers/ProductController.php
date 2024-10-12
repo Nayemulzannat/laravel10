@@ -89,7 +89,7 @@ class ProductController extends Controller
     function productUpdate(Request $request)
     {
         $user_id = $request->header('userID');
-        $category_id = $request->input('category_id');
+        $updateID = $request->input('updateID');
         $name = $request->input('name');
         $price = $request->input('price');
         $unit = $request->input('unit');
@@ -106,7 +106,7 @@ class ProductController extends Controller
             $filePath = $request->input('filePath');
             File::delete($filePath);
 
-            $result = product::where('user_id', $user_id)->where('id', $category_id)->update([
+            $result = product::where('user_id', $user_id)->where('id', $updateID)->update([
                 'name' => $name,
                 'price' => $price,
                 'unit' => $unit,
@@ -124,7 +124,7 @@ class ProductController extends Controller
                 ], 401);
             }
         } else {
-            $result = product::where('user_id', $user_id)->where('id', $category_id)->update([
+            $result = product::where('user_id', $user_id)->where('id', $updateID)->update([
                 'name' => $name,
                 'price' => $price,
                 'unit' => $unit

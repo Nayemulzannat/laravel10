@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryContoller;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\tokenVerification;
@@ -72,3 +73,14 @@ Route::post('/product-list', [ProductController::class, 'productList'])->middlew
 Route::post('/product-create', [ProductController::class, 'productCreate'])->middleware([tokenVerification::class]);
 Route::post('/product-update', [ProductController::class, 'productUpdate'])->middleware([tokenVerification::class]);
 Route::post('/product-delete', [ProductController::class, 'productDelete'])->middleware([tokenVerification::class]);
+
+
+// Page Routes Invoice
+Route::get('/invoicePage', [InvoiceController::class, 'InvoicePage'])->middleware([tokenVerification::class]);
+
+
+
+
+
+// Page Routes Invoice
+Route::get('/salePage', [InvoiceController::class, 'SalePage'])->middleware([tokenVerification::class]);
