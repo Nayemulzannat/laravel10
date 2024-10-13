@@ -16,4 +16,9 @@ class InvoiceController extends Controller
     {
         return view('pages.dashboard.sale-page');
     }
+
+
+
+
+    
 }
