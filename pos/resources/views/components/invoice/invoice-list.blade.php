@@ -17,6 +17,7 @@
                             <th>No</th>
                             <th>Name</th>
                             <th>Phone</th>
+                            <th>Phone</th>
                             <th>Total</th>
                             <th>Vat</th>
                             <th>Discount</th>
