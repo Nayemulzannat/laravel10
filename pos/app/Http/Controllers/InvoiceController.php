@@ -71,4 +71,8 @@ class InvoiceController extends Controller
         $user_id = $request->header('userID');
         return invoice::where('user_id', $user_id)->with('customer')->get();
     }
+    function invoiceDetails()
+    {
+        $user_id = $request->header('userID');
+    }
 }
