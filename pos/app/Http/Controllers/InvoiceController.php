@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\customer;
 use App\Models\invoice;
 use App\Models\invoiceProduct;
 use Exception;
@@ -20,6 +21,8 @@ class InvoiceController extends Controller
     {
         return view('pages.dashboard.sale-page');
     }
+
+
     function invoiceCreate(Request $request)
     {
 
@@ -71,8 +74,43 @@ class InvoiceController extends Controller
         $user_id = $request->header('userID');
         return invoice::where('user_id', $user_id)->with('customer')->get();
     }
-    function invoiceDetails()
+    function invoiceDetails(Request $request)
     {
         $user_id = $request->header('userID');
+        $cus_id = $request->input('cus_id');
+        $inv_id = $request->input('inv_id');
+
+        // return response()->json([
+        //     'user_id' => $user_id,
+        //     'cus_id' => $cus_id,
+        //     'inv_id' => $inv_id,
+        // ], 200);
+        $customerDetails = customer::where('user_id', $user_id)->where('id', $request->input('cus_id'))->first();
+        $invoiceTotal = invoice::where('user_id', '=', $user_id)->where('id', $request->input('inv_id'))->first();
+        $invoiceProduct = invoiceProduct::where('invoice_id', $request->input('inv_id'))
+            ->where('user_id', $user_id)->with('product')
+            ->get();
+        return array(
+            'customer' => $customerDetails,
+            'invoice' => $invoiceTotal,
+            'product' => $invoiceProduct,
+        );
+    }
+
+    function invoiceDelete(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user_id = $request->header('userID');
+            invoiceProduct::where('invoice_id', $request->input('inv_id'))
+                ->where('user_id', $user_id)
+                ->delete();
+            invoice::where('id', $request->input('inv_id'))->delete();
+            DB::commit();
+            return 1;
+        } catch (Exception $e) {
+            DB::rollBack();
+            return 0;
+        }
     }
 }

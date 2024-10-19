@@ -84,3 +84,11 @@ Route::get('/invoicePage', [InvoiceController::class, 'InvoicePage'])->middlewar
 
 // Page Routes Invoice
 Route::get('/salePage', [InvoiceController::class, 'SalePage'])->middleware([tokenVerification::class]);
+
+
+
+// Invoice
+Route::post("/invoice-create", [InvoiceController::class, 'invoiceCreate'])->middleware([tokenVerification::class]);
+Route::get("/invoice-select", [InvoiceController::class, 'invoiceSelect'])->middleware([tokenVerification::class]);
+Route::post("/invoice-details", [InvoiceController::class, 'invoiceDetails'])->middleware([tokenVerification::class]);
+Route::post("/invoice-delete", [InvoiceController::class, 'invoiceDelete'])->middleware([tokenVerification::class]);
