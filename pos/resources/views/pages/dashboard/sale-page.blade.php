@@ -120,10 +120,170 @@
             </div>
             <div class="modal-footer">
                 <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="add()" id="save-btn" class="btn bg-gradient-success">Add</button>
+                <button onclick="productAdd()" id="save-btn" class="btn bg-gradient-success">Add</button>
             </div>
         </div>
     </div>
 </div>
 
+
+<script>
+    (async () => {
+        showLoader();
+        await getCustomerDatainvoise();
+        await getProductData();
+        hideLoader();
+    })()
+
+    // $(document).ready(function() {
+    //     showLoader();
+    //     getCustomerDatainvoise();
+    //     hideLoader();
+    // });
+    let InvoiceItemList = [];
+    async function getCustomerDatainvoise() {
+        let res = await axios.post("/customer-list");
+
+        let customerTable = $('#customerTable');
+        let customerList = $('#customerList');
+
+
+        customerTable.DataTable().destroy();
+        customerList.empty();
+
+
+        res.data.forEach(function(item, index) {
+            let row = `<tr class="text-xs">
+                        <td><i class="bi bi-person"></i> ${item['name']}</td>
+
+
+                        <td><a data-name="${item['name']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark   text-xxs px-2 py-1  btn-sm m-0" onclick="addCustomer(${item['id']},'${item['name']}','${item['email']}');">Add</a></td>
+                     </tr>`
+
+            customerList.append(row);
+        })
+
+        new DataTable('#customerTable', {
+            order: [
+                [0, 'desc']
+            ],
+            scrollCollapse: false,
+            info: false,
+            lengthChange: false
+        });
+
+    }
+    async function addCustomer(CId, CName, CEmail) {
+        $("#CId").text(CId);
+        $("#CName").text(CName);
+        $("#CEmail").text(CEmail);
+    }
+    async function getProductData() {
+        let res = await axios.post("/product-list");
+
+
+        let productTable = $('#productTable');
+        let productList = $('#productList');
+
+
+        productTable.DataTable().destroy();
+        productList.empty();
+
+        res.data.forEach(function(item, index) {
+            let row = `<tr class="text-xs">
+                        <td> <img class="w-10" src="${item['img_url']}"/> ${item['name']} ($ ${item['price']})</td>
+
+                        <td><a data-name="${item['name']}" data-price="${item['price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1   btn-sm m-0" onclick="adproductListdProduct(${item['id']},'${item['name']}','${item['price']}');">Add</a></td>
+
+                     </tr>`
+            productList.append(row)
+        });
+        new DataTable('#productTable', {
+            order: [
+                [0, 'desc']
+            ],
+            scrollCollapse: false,
+            info: false,
+            lengthChange: false
+        });
+    }
+
+    async function adproductListdProduct(PId, PName, PPrice) {
+        $("#create-modal").modal('show');
+
+        $('#PId').val(PId);
+        $('#PName').val(PName);
+        $('#PPrice').val(PPrice);
+
+    }
+    async function productAdd() {
+
+        let PId = $('#PId').val();
+        let PName = $('#PName').val();
+        let PPrice = $('#PPrice').val();
+        let PQty = $('#PQty').val();
+
+        let PTotalPrice = (parseFloat(PPrice) * parseFloat(PQty)).toFixed(2);
+
+
+        if (PId.length == 0 && PName.length == 0 && PPrice.length == 0 && PQty.length == 0) {
+            $('#PId,#PName, #PPrice, #PQty').addClass('is-invalid');
+
+        } else if (PId.length == 0 && PName.length == 0 && PPrice.length == 0) {
+            $('#PId,#PName, #PPrice').addClass('is-invalid');
+
+        } else if (PId.length == 0 && PName.length == 0) {
+            $('#PId,#PName').addClass('is-invalid');
+
+        } else if (PId.length == 0) {
+            $('#PId').addClass('is-invalid');
+
+        } else if (PName.length == 0) {
+            $('#PName').addClass('is-invalid');
+
+        } else if (PPrice.length == 0) {
+            $('#PPrice').addClass('is-invalid');
+
+        } else if (PQty.length == 0) {
+            $('#PQty').addClass('is-invalid');
+        } else {
+            let item = {
+                product_name: PName,
+                product_id: PId,
+                qty: PQty,
+                sale_price: PTotalPrice
+            };
+            InvoiceItemList.push(item);
+            console.log(InvoiceItemList);
+            $('#create-modal').modal('hide')
+            $('#PQty').val('');
+
+            ShowInvoiceItem();
+
+        }
+
+    }
+    async function ShowInvoiceItem() {
+        let invoiceList = $('#invoiceList');
+        invoiceList.empty();
+
+        InvoiceItemList.forEach(function(item, index) {
+            let row = `<tr class="text-xs">
+                <td>${item['product_name']}</td>
+                <td>${item['qty']}</td>
+                <td>${item['sale_price']}</td>
+                <td><a data-index="${index}" onclick="removeItem(${index});" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
+             </tr>`
+            invoiceList.append(row)
+        })
+
+    }
+
+    function removeItem(index) {
+        InvoiceItemList.splice(index, 1);
+        ShowInvoiceItem();
+    }
+
+
+</script>
 @endsection
