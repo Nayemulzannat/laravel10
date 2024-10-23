@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
@@ -150,15 +150,31 @@
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
-                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                                <img class="w-100 " src="{{ asset('images/icon.svg') }}" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
+<script>
+    getList();
+    async function getList() {
+        showLoader();
+        let res = await axios.get("/summary");
 
+        document.getElementById('product').innerText = res.data['product']
+        document.getElementById('category').innerText = res.data['category']
+        document.getElementById('customer').innerText = res.data['customer']
+        document.getElementById('invoice').innerText = res.data['invoice']
+        document.getElementById('total').innerText = res.data['total']
+        document.getElementById('vat').innerText = res.data['vat']
+        document.getElementById('payable').innerText = res.data['payable']
+
+
+        hideLoader();
+    }
+</script>
