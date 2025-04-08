@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class ProductWish extends Model
+class ProductSlider extends Model
 {
     protected $fillable = ['product_id', 'user_id'];
     public function product(): BelongsTo
