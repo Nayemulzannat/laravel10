@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JWTToken;
 use App\Helper\ResponseHelper;
 use App\Mail\OTPMail;
 use App\Models\User;
@@ -29,19 +30,19 @@ class UserController extends Controller
         }
     }
 
-    // public function VerifyLogin(Request $request): JsonResponse
-    // {
-    //     $UserEmail = $request->UserEmail;
-    //     $OTP = $request->OTP;
+    public function VerifyLogin(Request $request): JsonResponse
+    {
+        $UserEmail = $request->UserEmail;
+        $OTP = $request->OTP;
 
-    //     $verification = User::where('email', $UserEmail)->where('otp', $OTP)->first();
+        $verification = User::where('email', $UserEmail)->where('otp', $OTP)->first();
 
-    //     if ($verification) {
-    //         User::where('email', $UserEmail)->where('otp', $OTP)->update(['otp' => '0']);
-    //         // $token = JWTToken::CreateToken($UserEmail, $verification->id);
-    //         return  ResponseHelper::Out('success', "", 200)->cookie('token', $token, 60 * 24 * 30);
-    //     } else {
-    //         return  ResponseHelper::Out('fail', null, 401);
-    //     }
-    // }
+        if ($verification) {
+            User::where('email', $UserEmail)->where('otp', $OTP)->update(['otp' => '0']);
+            $token = JWTToken::CreateToken($UserEmail, $verification->id);
+            return  ResponseHelper::Out('success', "", 200)->cookie('token', $token, 60 * 24 * 30);
+        } else {
+            return  ResponseHelper::Out('fail', null, 401);
+        }
+    }
 }

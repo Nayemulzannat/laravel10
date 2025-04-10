@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class ProductCart extends Model
 {
 
-    protected $fillable = ['user_id','product_id','color','size','qty','price'];
+    protected $fillable = ['user_id', 'product_id', 'color', 'size', 'qty', 'price'];
 
     public function product(): BelongsTo
     {
